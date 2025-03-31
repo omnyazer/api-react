@@ -24,7 +24,7 @@ function App() {
         body: JSON.stringify({
           title: "Nouveau produit",
           price: 29.99,
-          description: "Un super produit ajouté via React",
+          description: "Un super produit ajouté via API",
           image: "https://via.placeholder.com/150",
           category: "electronics",
         }),
