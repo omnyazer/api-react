@@ -60,6 +60,25 @@ function App() {
     }
   };
 
+  const handleUpdatePrice = async (id) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          price: 5,
+        }),
+      });
+
+      const data = await response.json();
+      alert(`Le prix du produit avec l'id ${data.id} a été modifié`);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour du prix :", error);
+    }
+  };
+
   return (
     <Container className="mt-4">
       <div className="text-center mb-4">
@@ -87,9 +106,17 @@ function App() {
 
                 <Button
                   variant="warning"
+                  className="mb-2"
                   onClick={() => handleUpdateProduct(product.id)}
                 >
                   Modifier le produit complet
+                </Button>
+
+                <Button
+                  variant="info"
+                  onClick={() => handleUpdatePrice(product.id)}
+                >
+                  Modifier le prix du produit
                 </Button>
               </Card.Body>
             </Card>
