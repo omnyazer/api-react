@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Card, Container, Row, Col, Button } from "react-bootstrap";
-import "./App.css"; 
+import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -37,6 +37,29 @@ function App() {
     }
   };
 
+  const handleUpdateProduct = async (id) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: "Produit modifié",
+          price: 49.99,
+          description: "Description modifiée",
+          image: "https://via.placeholder.com/150",
+          category: "electronics",
+        }),
+      });
+
+      const data = await response.json();
+      alert(`Le produit avec l'id ${data.id} a été modifié`);
+    } catch (error) {
+      console.error("Erreur lors de la modification du produit :", error);
+    }
+  };
+
   return (
     <Container className="mt-4">
       <div className="text-center mb-4">
@@ -61,6 +84,13 @@ function App() {
                 <Card.Text>
                   <strong>Prix :</strong> {product.price} €
                 </Card.Text>
+
+                <Button
+                  variant="warning"
+                  onClick={() => handleUpdateProduct(product.id)}
+                >
+                  Modifier le produit complet
+                </Button>
               </Card.Body>
             </Card>
           </Col>
