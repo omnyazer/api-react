@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Card, Button, Container, Row, Col } from "react-bootstrap";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -8,7 +8,7 @@ function App() {
     async function fetchProducts() {
       const response = await fetch("https://fakestoreapi.com/products");
       const data = await response.json();
-      setProducts(data); 
+      setProducts(data);
     }
     fetchProducts();
   }, []);
@@ -17,7 +17,7 @@ function App() {
     <Container className="mt-4">
       <Row>
         {products.map((product) => (
-          <Col key={product.id} md={4} className="mb-4">
+          <Col key={product.id} md={3} className="mb-4">
             <Card style={{ height: "100%" }}>
               <Card.Img
                 variant="top"
@@ -27,10 +27,10 @@ function App() {
               />
               <Card.Body>
                 <Card.Title>{product.title}</Card.Title>
+                <Card.Text>{product.description}</Card.Text>
                 <Card.Text>
                   <strong>Prix :</strong> {product.price} €
                 </Card.Text>
-                <Card.Text>{product.description}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
