@@ -79,6 +79,19 @@ function App() {
     }
   };
 
+  const handleDeleteProduct = async (id) => {
+    try {
+      const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+        method: "DELETE",
+      });
+
+      const data = await response.json();
+      alert(`Le produit avec l'id ${data.id} a été supprimé`);
+    } catch (error) {
+      console.error("Erreur lors de la suppression du produit :", error);
+    }
+  };
+
   return (
     <Container className="mt-4">
       <div className="text-center mb-4">
@@ -114,9 +127,17 @@ function App() {
 
                 <Button
                   variant="info"
+                  className="mb-2"
                   onClick={() => handleUpdatePrice(product.id)}
                 >
                   Modifier le prix du produit
+                </Button>
+
+                <Button
+                  variant="danger"
+                  onClick={() => handleDeleteProduct(product.id)}
+                >
+                  Supprimer le produit
                 </Button>
               </Card.Body>
             </Card>
