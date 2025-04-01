@@ -4,13 +4,27 @@ import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
+  const [error, setError] = useState(null);     
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     async function fetchProducts() {
-      const response = await fetch("https://fakestoreapi.com/products");
-      const data = await response.json();
-      setProducts(data);
+      try {
+        const response = await fetch("https://fakestoreapi.com/products");
+
+        if (!response.ok) {
+          throw new Error(`Erreur HTTP ${response.status}`);
+        }
+
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        setError(err.message); 
+      } finally {
+        setLoading(false); 
+      }
     }
+
     fetchProducts();
   }, []);
 
@@ -91,6 +105,9 @@ function App() {
       console.error("Erreur lors de la suppression du produit :", error);
     }
   };
+
+  if (loading) return <p className="text-center mt-4">Chargement...</p>;
+  if (error) return <p className="text-center mt-4 text-danger">Erreur : {error}</p>;
 
   return (
     <Container className="mt-4">
