@@ -4,8 +4,8 @@ import "./App.css";
 
 function App() {
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);     
-  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -19,9 +19,9 @@ function App() {
         const data = await response.json();
         setProducts(data);
       } catch (err) {
-        setError(err.message); 
+        setError(err.message);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     }
 
@@ -32,9 +32,7 @@ function App() {
     try {
       const response = await fetch("https://fakestoreapi.com/products", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: "Nouveau produit",
           price: 29.99,
@@ -44,10 +42,15 @@ function App() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error("Erreur lors de l’ajout du produit");
+      }
+
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été créé`);
     } catch (error) {
-      console.error("Erreur lors de la création du produit :", error);
+      alert("Une erreur est survenue lors de la création du produit");
+      console.error(error);
     }
   };
 
@@ -55,9 +58,7 @@ function App() {
     try {
       const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           title: "Produit modifié",
           price: 49.99,
@@ -67,10 +68,15 @@ function App() {
         }),
       });
 
+      if (!response.ok) {
+        throw new Error("Erreur lors de la modification");
+      }
+
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été modifié`);
     } catch (error) {
-      console.error("Erreur lors de la modification du produit :", error);
+      alert("Une erreur est survenue lors de la modification du produit");
+      console.error(error);
     }
   };
 
@@ -78,18 +84,19 @@ function App() {
     try {
       const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          price: 5,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ price: 5 }),
       });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de la mise à jour du prix");
+      }
 
       const data = await response.json();
       alert(`Le prix du produit avec l'id ${data.id} a été modifié`);
     } catch (error) {
-      console.error("Erreur lors de la mise à jour du prix :", error);
+      alert("Une erreur est survenue lors de la mise à jour du prix");
+      console.error(error);
     }
   };
 
@@ -99,10 +106,15 @@ function App() {
         method: "DELETE",
       });
 
+      if (!response.ok) {
+        throw new Error("Erreur lors de la suppression");
+      }
+
       const data = await response.json();
       alert(`Le produit avec l'id ${data.id} a été supprimé`);
     } catch (error) {
-      console.error("Erreur lors de la suppression du produit :", error);
+      alert("Une erreur est survenue lors de la suppression du produit");
+      console.error(error);
     }
   };
 
