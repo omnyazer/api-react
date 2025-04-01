@@ -13,13 +13,14 @@ function App() {
         const response = await fetch("https://fakestoreapi.com/products");
 
         if (!response.ok) {
-          throw new Error(`Erreur HTTP ${response.status}`);
+          throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
         }
 
         const data = await response.json();
         setProducts(data);
       } catch (err) {
         setError(err.message);
+        console.error("Erreur lors de la récupération des produits :", err);
       } finally {
         setLoading(false);
       }
@@ -43,7 +44,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de l’ajout du produit");
+        throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -69,7 +70,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la modification");
+        throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -89,7 +90,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la mise à jour du prix");
+        throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
       }
 
       const data = await response.json();
@@ -107,7 +108,7 @@ function App() {
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la suppression");
+        throw new Error(`Erreur HTTP ${response.status} : ${response.statusText}`);
       }
 
       const data = await response.json();
